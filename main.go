@@ -20,10 +20,12 @@ func main() {
 	check(err)
 	cfg, err := ini.Load("parser.ini")
 	check(err)
+
 	println("fileSize:", len(dat))
+
 	al, err := cfg.Section("tool").Key("alignment").Int()
 	check(err)
-	println("alignment", al)
+	// println("alignment", al)
 	parserImpl.SetInputs(al, dat)
 	//println(parserImpl.ReadStr(0, 24))
 	//parserImpl.WriteStr(0, "Eszdman Tech regs from libs")

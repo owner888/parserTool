@@ -1,8 +1,9 @@
 package parserImpl
 
 import (
-	"github.com/go-ini/ini"
 	"parserTool/Errors"
+
+	"github.com/go-ini/ini"
 )
 
 type IniKey struct {
@@ -38,6 +39,7 @@ var index = 0
 var ValueIndex = 0
 
 func Header(ini *ini.File) {
+	// read ini header group
 	headKeys := ini.Section("header").Keys()
 	for i := 0; i < len(headKeys); i++ {
 		ind, _ := headKeys[i].Int()
@@ -94,9 +96,11 @@ func ReadKeys(ini *ini.File) []Key {
 	}
 	ValueIndex = indexStart
 	index = ValueIndex + alignPos(idSize)
+	println("keys length:", len(keys))
 	for i := 0; i < len(keys); i++ {
-		//println("Pos:", index+int(keys[i].Addr))
+		println("Pos:", index+int(keys[i].Addr))
 		_, keys[i].Data = Read(index+int(keys[i].Addr), int(keys[i].KeySize))
 	}
+
 	return keys
 }

@@ -2,8 +2,10 @@ package parserImpl
 
 import (
 	"encoding/binary"
-	"github.com/go-ini/ini"
+	"fmt"
 	"parserTool/Errors"
+
+	"github.com/go-ini/ini"
 )
 
 type headerSizes struct {
@@ -40,13 +42,16 @@ func readCfg(config *ini.File) {
 	head.parserName, Errors.Err = config.Section("header").Key("parserName").Int()
 	Errors.Check(Errors.Err)
 }
+
 func SetInputs(al int, dataIn []byte) {
 	alignment = al
 	data = dataIn
 }
+
 func GetData() []byte {
 	return data
 }
+
 func ReadUint16(index int) (indexNew int, out uint16) {
 	if endianLittle {
 		out = binary.LittleEndian.Uint16(data[index : index+2])
@@ -56,6 +61,7 @@ func ReadUint16(index int) (indexNew int, out uint16) {
 	indexNew = alignPos(2) + index
 	return
 }
+
 func ReadUint32(index int) (indexNew int, out uint32) {
 	if endianLittle {
 		out = binary.LittleEndian.Uint32(data[index : index+4])
@@ -109,6 +115,7 @@ func WriteUint64(index int, in uint64) (indexNew int) {
 }
 func Read(index, size int) (indexNew int, out []byte) {
 	indexNew = index + size
+	fmt.Printf("dataLen:%d, index:%d size:%d indexNew:%d\n", len(data), index, size, indexNew)
 	out = data[index:indexNew]
 	return
 }
