@@ -1,14 +1,13 @@
 package main
 
 import (
-	"github.com/go-ini/ini"
 	"os"
 	"parserTool/parserImpl"
 	"strconv"
 	"strings"
-)
 
-var err error
+	"github.com/go-ini/ini"
+)
 
 func check(err error) {
 	if err != nil {
@@ -17,13 +16,14 @@ func check(err error) {
 }
 
 func main() {
-	dat, err := os.ReadFile("com.qti.sensormodule.sunny_imx586 (1).bin")
+	dat, err := os.ReadFile("com.qti.sensormodule.thor_semco_imx586_ultra.bin")
 	check(err)
 	cfg, err := ini.Load("parser.ini")
 	check(err)
 	println("fileSize:", len(dat))
 	al, err := cfg.Section("tool").Key("alignment").Int()
 	check(err)
+	println("alignment", al)
 	parserImpl.SetInputs(al, dat)
 	//println(parserImpl.ReadStr(0, 24))
 	//parserImpl.WriteStr(0, "Eszdman Tech regs from libs")
